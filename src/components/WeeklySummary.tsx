@@ -28,7 +28,7 @@ const WeeklySummary = () => {
   })
 
   return (
-    <div className="p-4 bg-white rounded-xl shadow-sm">
+    <div className="pt-[20vh] bg-white rounded-xl shadow-sm">
       <h3 className="font-medium mb-2">Weekly Summary</h3>
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data}>

@@ -1,4 +1,5 @@
 import { useCalories } from "../context/CalorieContext";
+import WeeklySummary from "../components/WeeklySummary";
 
 export default function Dashboard() {
   const { meals, workouts, dailyGoal } = useCalories();
@@ -35,7 +36,6 @@ export default function Dashboard() {
           <p className="text-lg font-bold">{remaining}</p>
         </div>
       </div>
-
       <div className="grid grid-cols-2 gap-4 text-center">
         <div className="bg-blue-100 p-3 rounded">
           <p className="text-sm text-gray-600">Consumed</p>
@@ -47,6 +47,7 @@ export default function Dashboard() {
           <p className="text-lg font-bold">{burned}</p>
         </div>
       </div>
+              <div className="pt-8"><WeeklySummary /></div>
     </div>
   );
 }
