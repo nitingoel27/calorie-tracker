@@ -43,7 +43,10 @@ OUTPUT FORMAT (JSON ONLY):
 {
   "type": "meal" | "workout",
   "name": string,
-  "calories": number
+  "calories": number,
+  "protein": number,   // grams
+  "fat": number,       // grams
+  "carbs": number      // grams
 }
 `
     // Use the v1beta endpoint for Gemini models which may not be available

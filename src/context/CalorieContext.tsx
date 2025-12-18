@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type Meal = { id: string; name: string; calories: number; date: string; };
-export type Workout = { id: string; name: string; calories: number; date: string; };
+export type Meal = { id: string; name: string; calories: number; protein?: number; fat?: number; carbs?: number; date: string; };
+export type Workout = { id: string; name: string; calories: number; protein?: number; fat?: number; carbs?: number; date: string; };
 
 type CalorieContextType = {
   meals: Meal[];
@@ -37,8 +37,28 @@ export function CalorieProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => { localStorage.setItem("workouts", JSON.stringify(workouts)); }, [workouts]);
   useEffect(() => { localStorage.setItem("daily_goal", String(dailyGoal)); }, [dailyGoal]);
 
-  const addMeal = (meal: Meal) => setMeals((prev) => [...prev, meal]);
-  const addWorkout = (workout: Workout) => setWorkouts((prev) => [...prev, workout]);
+  const addMeal = (meal: Meal) => {
+    const normalized = {
+      ...meal,
+      calories: Number(meal.calories) || 0,
+      protein: meal.protein !== undefined ? Number(meal.protein) || 0 : undefined,
+      fat: meal.fat !== undefined ? Number(meal.fat) || 0 : undefined,
+      carbs: meal.carbs !== undefined ? Number(meal.carbs) || 0 : undefined,
+    }
+    setMeals((prev) => [...prev, normalized]);
+  }
+
+  const addWorkout = (workout: Workout) => {
+    const normalized = {
+      ...workout,
+      calories: Number(workout.calories) || 0,
+      protein: workout.protein !== undefined ? Number(workout.protein) || 0 : undefined,
+      fat: workout.fat !== undefined ? Number(workout.fat) || 0 : undefined,
+      carbs: workout.carbs !== undefined ? Number(workout.carbs) || 0 : undefined,
+    }
+    setWorkouts((prev) => [...prev, normalized]);
+  }
+
   const deleteMeal = (id: string) => setMeals((prev) => prev.filter((m) => m.id !== id));
   const deleteWorkout = (id: string) => setWorkouts((prev) => prev.filter((w) => w.id !== id));
   const setDailyGoal = (goal: number) => setDailyGoalState(goal);

@@ -53,6 +53,15 @@ const HistoryItem = ({ entry, isWorkout, onDelete }: Props) => {
 
         <div className="flex gap-2 items-center">
           <span>{entry.calories} cal</span>
+          {entry.protein !== undefined && (
+            <span className="text-xs text-gray-500">• {entry.protein}g P</span>
+          )}
+          {entry.fat !== undefined && (
+            <span className="text-xs text-gray-500">• {entry.fat}g F</span>
+          )}
+          {entry.carbs !== undefined && (
+            <span className="text-xs text-gray-500">• {entry.carbs}g C</span>
+          )}
           <button
             onClick={() => onDelete(entry.id)}
             className="text-red-500 text-sm"
