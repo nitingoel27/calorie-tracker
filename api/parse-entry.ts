@@ -1,16 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node"
 import * as https from "https"
 
-type GeminiResponse = {
-  candidates?: {
-    content?: {
-      parts?: {
-        text?: string
-      }[]
-    }
-  }[]
-}
-
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse
