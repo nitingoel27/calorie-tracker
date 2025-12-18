@@ -1,24 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Header from "./components/Header"
-import BottomNav from "./components/BottomNav"
-import Dashboard from "./pages/Dashboard"
-import Add from "./pages/Add"
-import History from "./pages/History"
+  import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+  import { CalorieProvider } from "./context/CalorieContext";
+  import Dashboard from "./pages/Dashboard";
+  import History from "./pages/History";
+  import Settings from "./pages/Settings";
+  import Add from "./pages/Add";
+  import FloatingAddButton from "./components/FloatingAddButton";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="pb-16">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/history" element={<History />} />
-        </Routes>
-        <BottomNav />
-      </div>
-    </BrowserRouter>
-  )
-}
 
-export default App
+  export default function App() {
+    return (
+      <CalorieProvider>
+        <BrowserRouter>
+          <nav className="p-4 flex gap-4 border-b">
+            <Link to="/">Dashboard</Link>
+            <Link to="/history">History</Link>
+            <Link to="/settings">Settings</Link>
+          </nav>
+
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/app" element={<Add />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+                  <FloatingAddButton />
+        </BrowserRouter>
+      </CalorieProvider>
+    );
+  }
