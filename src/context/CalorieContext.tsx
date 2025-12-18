@@ -12,6 +12,10 @@ type CalorieContextType = {
   deleteWorkout: (id: string) => void;
   dailyGoal: number;
   setDailyGoal: (goal: number) => void;
+  updateMeal: (meal: Meal) => void;
+  updateWorkout: (workout: Workout) => void;
+  macroTargets: { protein: number; fat: number; carbs: number };
+  setMacroTargets: (targets: { protein: number; fat: number; carbs: number }) => void;
 };
 
 const CalorieContext = createContext<CalorieContextType | undefined>(undefined);
@@ -32,10 +36,34 @@ export function CalorieProvider({ children }: { children: React.ReactNode }) {
     return stored ? Number(stored) : 2000;
   });
 
+  const [macroTargets, setMacroTargetsState] = useState<{
+    protein: number;
+    fat: number;
+    carbs: number;
+  }>(() => {
+    const stored = localStorage.getItem("macro_targets");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (
+          typeof parsed.protein === "number" &&
+          typeof parsed.fat === "number" &&
+          typeof parsed.carbs === "number"
+        ) {
+          return parsed;
+        }
+      } catch {}
+    }
+    return { protein: 120, fat: 60, carbs: 250 };
+  });
+
   // Persist changes
   useEffect(() => { localStorage.setItem("meals", JSON.stringify(meals)); }, [meals]);
   useEffect(() => { localStorage.setItem("workouts", JSON.stringify(workouts)); }, [workouts]);
   useEffect(() => { localStorage.setItem("daily_goal", String(dailyGoal)); }, [dailyGoal]);
+  useEffect(() => {
+    localStorage.setItem("macro_targets", JSON.stringify(macroTargets));
+  }, [macroTargets]);
 
   const addMeal = (meal: Meal) => {
     const normalized = {
@@ -61,11 +89,39 @@ export function CalorieProvider({ children }: { children: React.ReactNode }) {
 
   const deleteMeal = (id: string) => setMeals((prev) => prev.filter((m) => m.id !== id));
   const deleteWorkout = (id: string) => setWorkouts((prev) => prev.filter((w) => w.id !== id));
+
+  const updateMeal = (updated: Meal) =>
+    setMeals((prev) =>
+      prev.map((m) => (m.id === updated.id ? { ...m, ...updated } : m))
+    );
+
+  const updateWorkout = (updated: Workout) =>
+    setWorkouts((prev) =>
+      prev.map((w) => (w.id === updated.id ? { ...w, ...updated } : w))
+    );
   const setDailyGoal = (goal: number) => setDailyGoalState(goal);
+  const setMacroTargets = (targets: {
+    protein: number;
+    fat: number;
+    carbs: number;
+  }) => setMacroTargetsState(targets);
 
   return (
     <CalorieContext.Provider
-      value={{ meals, workouts, addMeal, addWorkout, deleteMeal, deleteWorkout, dailyGoal, setDailyGoal }}
+      value={{
+        meals,
+        workouts,
+        addMeal,
+        addWorkout,
+        deleteMeal,
+        deleteWorkout,
+        dailyGoal,
+        setDailyGoal,
+        updateMeal,
+        updateWorkout,
+        macroTargets,
+        setMacroTargets,
+      }}
     >
       {children}
     </CalorieContext.Provider>
