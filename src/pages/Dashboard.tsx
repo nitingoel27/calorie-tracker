@@ -7,11 +7,11 @@ export default function Dashboard() {
   const today = new Date().toISOString().slice(0, 10);
 
   const consumed = meals
-    .filter((m) => m.date === today)
+    .filter((m) => m?.date?.slice(0, 10) === today)
     .reduce((sum, m) => sum + m.calories, 0);
 
   const burned = workouts
-    .filter((w) => w.date === today)
+    .filter((w) => w?.date?.slice(0, 10) === today)
     .reduce((sum, w) => sum + w.calories, 0);
 
   const netCalories = consumed - burned;
@@ -47,7 +47,9 @@ export default function Dashboard() {
           <p className="text-lg font-bold">{burned}</p>
         </div>
       </div>
-              <div className="pt-8"><WeeklySummary /></div>
+      <div className="pt-8">
+        <WeeklySummary />
+      </div>
     </div>
   );
 }

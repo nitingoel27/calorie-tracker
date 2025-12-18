@@ -1,78 +1,69 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useCalories } from "../context/CalorieContext";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react"
+import { useCalories } from "../context/CalorieContext"
+import { v4 as uuidv4 } from "uuid"
+
+type AIParsedEntry = {
+  type: "meal" | "workout"
+  name: string
+  calories: number
+}
 
 export default function Add() {
-  const { addMeal, addWorkout } = useCalories();
-  const navigate = useNavigate();
+  const { addMeal, addWorkout } = useCalories()
+  const [text, setText] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const [name, setName] = useState("");
-  const [calories, setCalories] = useState("");
-  const [type, setType] = useState<"meal" | "workout">("meal");
+  const handleAIAdd = async () => {
+    if (!text.trim()) return
+    setLoading(true)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !calories) return;
+    const res = await fetch("/api/parse-entry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    })
 
-    // IMPORTANT: keep date format consistent
-    const today = new Date().toISOString().slice(0, 10);
+    const data = (await res.json()) as AIParsedEntry
+
+    // accept 0 calories (e.g. water) — only reject when calories is null/undefined
+    if (!data || !data.name || data.calories === undefined || data.calories === null) {
+      alert("Could not understand entry")
+      setLoading(false)
+      return
+    }
 
     const entry = {
       id: uuidv4(),
-      name,
-      calories: Number(calories),
-      date: today,
-    };
-
-    if (type === "meal") {
-      addMeal(entry);
-    } else {
-      addWorkout(entry);
+      name: data.name,
+      calories: data.calories,
+      date: new Date().toISOString(),
     }
 
-    navigate("/");
-  };
+    if (data.type === "meal") addMeal(entry)
+    else addWorkout(entry)
+
+    setText("")
+    setLoading(false)
+  }
 
   return (
     <div className="p-4 space-y-4">
-      <h2 className="text-lg font-medium">Add Entry</h2>
+      <h2 className="text-lg font-bold">Add with AI</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full p-3 border rounded-lg"
-          required
-        />
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Ate 1 bowl sweet corn"
+        className="w-full p-3 border rounded-lg"
+      />
 
-        <input
-          type="number"
-          placeholder="Calories"
-          value={calories}
-          onChange={(e) => setCalories(e.target.value)}
-          className="w-full p-3 border rounded-lg"
-          required
-        />
-
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value as "meal" | "workout")}
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="meal">Meal (Calories In)</option>
-          <option value="workout">Workout (Calories Out)</option>
-        </select>
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white p-3 rounded-lg active:scale-95"
-        >
-          Add Entry
-        </button>
-      </form>
+      <button
+        onClick={handleAIAdd}
+        disabled={loading}
+        className="w-full bg-purple-600 text-white p-3 rounded-lg"
+      >
+        {loading ? "Analyzing..." : "Add using AI"}
+      </button>
     </div>
-  );
+  )
 }
