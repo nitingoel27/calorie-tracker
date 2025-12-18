@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useCalories } from "../context/CalorieContext";
 import { v4 as uuidv4 } from "uuid";
 
@@ -108,15 +108,6 @@ export default function Dashboard() {
   const netCalories = consumed - burned;
   const remaining = dailyGoal - netCalories;
 
-  // auto-scroll chat to bottom when entries or preview change
-  const chatRef = useRef<HTMLDivElement | null>(null)
-  useEffect(() => {
-    const el = chatRef.current
-    if (!el) return
-    // scroll to bottom smoothly
-    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
-  }, [meals, workouts, preview])
-
   return (
     <div className="p-4 space-y-4">
       <h1 className="text-xl font-bold">Dashboard</h1>
@@ -149,64 +140,32 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Chat area: list all today's entries */}
-      <div className="pb-32">{/* extra bottom padding for fixed input */}
-        <div ref={chatRef} className="space-y-3 max-h-[50vh] overflow-auto p-2">
-          {/* Combine meals and workouts for today, sorted ascending */}
-          {([
-            ...meals.map((m) => ({ ...m, type: "meal" })),
-            ...workouts.map((w) => ({ ...w, type: "workout" })),
-          ] as Array<import('../context/CalorieContext').Meal & { type: 'meal' } | import('../context/CalorieContext').Workout & { type: 'workout' }>)
-            .filter((e) => e.date?.slice(0, 10) === today)
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((entry) => (
-              <div
-                key={entry.id}
-                className={`max-w-[85%] p-3 rounded-lg shadow-sm ${entry.type === 'meal' ? 'bg-gray-100 self-start' : 'bg-orange-100 self-end'}`}
-              >
-                <div className="font-medium">{entry.name}</div>
-                <div className="text-xs text-gray-600">{new Date(entry.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                <div className="mt-2 text-sm">
-                  <span className="font-semibold">{entry.calories} cal</span>
-                  {entry.protein !== undefined && <span className="ml-2 text-xs text-gray-600">• {entry.protein}g P</span>}
-                  {entry.fat !== undefined && <span className="ml-2 text-xs text-gray-600">• {entry.fat}g F</span>}
-                  {entry.carbs !== undefined && <span className="ml-2 text-xs text-gray-600">• {entry.carbs}g C</span>}
-                </div>
-              </div>
-            ))}
-
-          {/* Preview (AI assistant) shown as a bot bubble if present */}
-          {preview && (
-            <div className="max-w-[85%] p-3 rounded-lg shadow-sm bg-indigo-50 self-start">
-              <div className="font-medium">{preview.name}</div>
-              <div className="text-xs text-gray-600">AI suggestion</div>
-              <div className="mt-2 text-sm">
-                <span className="font-semibold">{preview.calories} cal</span>
-                <span className="ml-2 text-xs text-gray-600">• {preview.protein ?? 0}g P</span>
-                <span className="ml-2 text-xs text-gray-600">• {preview.fat ?? 0}g F</span>
-                <span className="ml-2 text-xs text-gray-600">• {preview.carbs ?? 0}g C</span>
-              </div>
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="font-medium mb-2">Add entry (AI)</h2>
+        {preview && (
+          <div className="mb-2 p-2 border rounded">
+            <p className="font-medium">{preview.name}</p>
+            <div className="flex gap-4 text-sm text-gray-600">
+              <div>{preview.calories} cal</div>
+              <div>{preview.protein ?? 0}g protein</div>
+              <div>{preview.fat ?? 0}g fat</div>
+              <div>{preview.carbs ?? 0}g carbs</div>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Fixed chat input at bottom-right */}
-      <div className="fixed left-0 right-0 bottom-4 px-4 pointer-events-none">
-        <div className="mx-auto max-w-2xl flex items-end gap-2 pointer-events-auto">
-          <textarea
-            value={text}
-            onChange={(e) => { setText(e.target.value); setPreview(null); }}
-            placeholder="Type a meal or workout (e.g. '2 eggs and toast')"
-            className="flex-1 p-3 border rounded-lg resize-none h-14"
-          />
+          </div>
+        )}
+        <textarea
+          value={text}
+          onChange={(e) => { setText(e.target.value); setPreview(null); }}
+          placeholder="Ate 1 bowl sweet corn"
+          className="w-full p-3 border rounded-lg mb-2"
+        />
+        <div className="flex gap-2">
           <button
             onClick={handleAIAdd}
             disabled={loading}
-            className="w-12 h-12 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-lg"
-            aria-label="Send"
+            className="bg-purple-600 text-white p-2 rounded-lg flex-1"
           >
-            {loading ? '…' : '➤'}
+            {loading ? "Analyzing..." : "Add"}
           </button>
         </div>
       </div>

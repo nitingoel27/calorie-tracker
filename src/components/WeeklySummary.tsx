@@ -103,10 +103,12 @@ const WeeklySummary = () => {
               >
                 <div className="text-sm font-medium">{d.date}</div>
                 <div className="mt-2 text-sm font-semibold text-gray-800">{d.in} cal</div>
-                <div className="mt-2 grid grid-cols-1 gap-1 text-xs">
-                  <div className="px-2 py-1 rounded bg-green-100 text-green-800 truncate">Protein: {Math.round(d.protein)}g</div>
-                  <div className="px-2 py-1 rounded bg-amber-100 text-amber-800 truncate">Fat: {Math.round(d.fat)}g</div>
-                  <div className="px-2 py-1 rounded bg-blue-100 text-blue-800 truncate">Carbs: {Math.round(d.carbs)}g</div>
+                <div className="mt-2 flex flex-col gap-2">
+                  <div className="flex justify-center gap-2">
+                    <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">{d.protein}g P</span>
+                    <span className="px-2 py-1 rounded text-xs bg-amber-100 text-amber-800">{d.fat}g F</span>
+                    <span className="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">{d.carbs}g C</span>
+                  </div>
                 </div>
               </div>
             )

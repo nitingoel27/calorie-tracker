@@ -42,7 +42,7 @@ INPUT:
 OUTPUT FORMAT (JSON ONLY):
 {
   "type": "meal" | "workout",
-  "name": string,
+  "name": string, //add quantity as well in the name in grams if it is bowl plate convert accordingly
   "calories": number,
   "protein": number,   // grams
   "fat": number,       // grams
