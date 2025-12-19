@@ -30,12 +30,11 @@ const HistoryItem = ({ entry, isWorkout, onDelete, onEdit }: Props) => {
 
   const numberInputClass =
   "w-full px-2 py-1 text-xs rounded border appearance-none " +
-  "bg-white text-gray-900 " +
+  "bg-dark text-gray-900 " +
   "dark:bg-slate-800 dark:text-slate-100 " +
   "border-gray-200 dark:border-slate-700 " +
   "placeholder-gray-400 dark:placeholder-slate-500 " +
   "focus:outline-none focus:ring-1 focus:ring-indigo-500"
-
 
 
   const [draft, setDraft] = useState(() => ({
@@ -115,95 +114,39 @@ const HistoryItem = ({ entry, isWorkout, onDelete, onEdit }: Props) => {
   className={textInputClass}
 />
 
-<div className="grid grid-cols-2 gap-2 text-[11px]">
-  {/* Calories */}
-  <div className="flex flex-col gap-0.5">
-    <label className="text-gray-500 dark:text-slate-400">
-      Calories (kcal)
-    </label>
-    <input
-      type="number"
-      value={draft.calories}
-      onChange={(e) =>
-        setDraft((d) => ({
-          ...d,
-          calories: Number(e.target.value) || 0,
-        }))
-      }
-      className={numberInputClass}
-      placeholder="kcal"
-    />
-  </div>
+                <div className="grid grid-cols-2 gap-1 text-[11px]">
+                <input
+  type="number"
+  inputMode="decimal"
+  value={draft.calories}
+  onChange={(e) =>
+    setDraft((d) => ({
+      ...d,
+      calories: Number(e.target.value) || 0,
+    }))
+  }
+  className={numberInputClass}
+  placeholder="Calories"
+/>
 
-  {/* Protein */}
-  <div className="flex flex-col gap-0.5">
-    <label className="text-gray-500 dark:text-slate-400">
-      Protein (g)
-    </label>
-    <input
-      type="number"
-      value={draft.protein ?? ""}
-      onChange={(e) =>
-        setDraft((d) => ({
-          ...d,
-          protein:
-            e.target.value === ""
-              ? undefined
-              : Number(e.target.value) || 0,
-        }))
-      }
-      className={numberInputClass}
-      placeholder="g"
-    />
-  </div>
+<input
+  type="number"
+  inputMode="decimal"
+  value={draft.protein ?? ""}
+  onChange={(e) =>
+    setDraft((d) => ({
+      ...d,
+      protein:
+        e.target.value === ""
+          ? undefined
+          : Number(e.target.value) || 0,
+    }))
+  }
+  className={numberInputClass}
+  placeholder="Protein"
+/>
 
-  {/* Fat */}
-  <div className="flex flex-col gap-0.5">
-    <label className="text-gray-500 dark:text-slate-400">
-      Fat (g)
-    </label>
-    <input
-      type="number"
-      value={draft.fat ?? ""}
-      onChange={(e) =>
-        setDraft((d) => ({
-          ...d,
-          fat:
-            e.target.value === ""
-              ? undefined
-              : Number(e.target.value) || 0,
-        }))
-      }
-      className={numberInputClass}
-      placeholder="g"
-    />
-  </div>
-
-  {/* Carbs */}
-  <div className="flex flex-col gap-0.5">
-    <label className="text-gray-500 dark:text-slate-400">
-      Carbs (g)
-    </label>
-    <input
-      type="number"
-      value={draft.carbs ?? ""}
-      onChange={(e) =>
-        setDraft((d) => ({
-          ...d,
-          carbs:
-            e.target.value === ""
-              ? undefined
-              : Number(e.target.value) || 0,
-        }))
-      }
-      className={numberInputClass}
-      placeholder="g"
-    />
-  </div>
-</div>
-
-
-
+                </div>
               </div>
             ) : (
               <>
