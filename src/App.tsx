@@ -53,7 +53,7 @@ function AppShell() {
                dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600"
     aria-label="Toggle theme"
   >
-    {theme === "dark" ? "☀ Light" : "🌙 Dark"}
+    {theme === "dark" ? "☀" : "🌙"}
   </button>
 </nav>
         <Routes>
