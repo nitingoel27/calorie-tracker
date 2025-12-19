@@ -2,6 +2,8 @@ import { useCalories } from "../context/CalorieContext"
 import { useRef, useEffect, useMemo } from "react"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts"
 import { useNavigate } from "react-router-dom"
+import { useTheme } from "../context/ThemeContext"
+
 
 const WeeklySummary = () => {
   const { meals, workouts, dailyGoal, macroTargets } = useCalories()
@@ -9,7 +11,8 @@ const WeeklySummary = () => {
 
   const todayRef = useRef<HTMLDivElement | null>(null)
   const didScrollRef = useRef(false)
-
+  const { theme } = useTheme()
+  const isDark = theme === "dark"  
   const today = new Date()
   // compute Monday of the current week (Monday = start)
   const dayIndex = today.getDay() // 0 (Sun) .. 6 (Sat)
@@ -100,16 +103,38 @@ const WeeklySummary = () => {
   }, [])
 
   return (
-    <div className="pt-[10vh] bg-white rounded-xl shadow-sm">
+    <div className="
+    pt-[10vh]
+    bg-white dark:bg-slate-900
+    text-gray-900 dark:text-slate-100
+    rounded-xl shadow-sm
+  ">  
       <h3 className="font-medium mb-2">Weekly Summary</h3>
       <ResponsiveContainer width="100%" height={200}>
-        <BarChart data={data}>
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="in" fill="#34D399" />
-          <Bar dataKey="out" fill="#3B82F6" />
-        </BarChart>
+      <BarChart data={data}>
+  <XAxis
+    dataKey="date"
+    stroke={isDark ? "#CBD5E1" : "#4B5563"}
+    tick={{ fill: isDark ? "#CBD5E1" : "#4B5563" }}
+  />
+  <YAxis
+    stroke={isDark ? "#CBD5E1" : "#4B5563"}
+    tick={{ fill: isDark ? "#CBD5E1" : "#4B5563" }}
+  />
+  <Tooltip
+    contentStyle={{
+      backgroundColor: isDark ? "#0F172A" : "#FFFFFF",
+      border: isDark ? "1px solid #334155" : "1px solid #E5E7EB",
+      color: isDark ? "#E5E7EB" : "#111827",
+    }}
+    labelStyle={{
+      color: isDark ? "#E5E7EB" : "#111827",
+    }}
+  />
+  <Bar dataKey="in" fill="#34D399" />
+  <Bar dataKey="out" fill="#3B82F6" />
+</BarChart>
+
       </ResponsiveContainer>
 
       <div className="p-3">
@@ -123,12 +148,13 @@ const WeeklySummary = () => {
             const fat = d.fat ?? 0
             const carbs = d.carbs ?? 0
             const bgClass = isToday
-              ? 'bg-indigo-50'
-              : protein >= fat && protein >= carbs
-              ? 'bg-green-50'
-              : fat >= protein && fat >= carbs
-              ? 'bg-amber-50'
-              : 'bg-blue-50'
+  ? 'bg-indigo-50 dark:bg-indigo-900/30'
+  : protein >= fat && protein >= carbs
+  ? 'bg-green-50 dark:bg-green-900/30'
+  : fat >= protein && fat >= carbs
+  ? 'bg-amber-50 dark:bg-amber-900/30'
+  : 'bg-blue-50 dark:bg-blue-900/30'
+
 
             return (
               <div
@@ -139,7 +165,10 @@ const WeeklySummary = () => {
                 onClick={() => navigate(`/day/${d.iso}`)}
               >
                 <div className="text-sm font-medium">{d.date}</div>
-                <div className="mt-2 text-sm font-semibold text-gray-800">{d.in} cal</div>
+                <div className="mt-2 text-sm font-semibold text-gray-800 dark:text-slate-100">
+  {d.in} cal
+</div>
+
                 <div className="mt-2 flex flex-col gap-1 items-center">
                   <span className="px-2 py-0.5 rounded text-[11px] bg-green-100 text-green-800 break-words w-full max-w-[120px]">
                     {d.protein}g P
@@ -167,10 +196,8 @@ const WeeklySummary = () => {
                         ? "bg-amber-500"
                         : "bg-blue-500"
                     return (
-                      <div
-                        key={key}
-                        className="w-full h-1 rounded-full bg-gray-100 overflow-hidden"
-                      >
+                      <div className="w-full h-1 rounded-full bg-gray-100 dark:bg-slate-700 overflow-hidden">
+
                         <div
                           className={`h-full ${barClass}`}
                           style={{ width: `${pct}%` }}
@@ -183,8 +210,13 @@ const WeeklySummary = () => {
             )
           })}
         </div>
+        <div className="
+  mt-3 text-xs
+  text-gray-700 dark:text-slate-300
+  bg-gray-50 dark:bg-slate-800
+  rounded-lg p-3
+">
 
-        <div className="mt-3 text-xs text-gray-600 bg-gray-50 rounded-lg p-3 flex flex-col gap-1">
           <div>
             <span className="font-semibold">This week</span>: approx{" "}
             <span className="font-semibold">

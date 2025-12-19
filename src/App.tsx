@@ -18,7 +18,7 @@ export default function App() {
 }
 
 function AppShell() {
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
 
   const linkClass = (path: string) => {
@@ -36,24 +36,26 @@ function AppShell() {
     // wrapper controlling dark mode; we keep it but hide the toggle for now
     <div className={theme === "dark" ? "dark" : ""}>
       <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-slate-950 dark:text-slate-100">
-        <nav className="p-4 flex items-center justify-between border-b bg-gray-100/90 backdrop-blur-sm dark:bg-slate-900/90 dark:border-slate-800">
-          <div className="flex gap-4">
-            <Link to="/" className={linkClass("/")}>
-              Dashboard
-            </Link>
-            <Link to="/summary" className={linkClass("/summary")}>
-              Summary
-            </Link>
-            <Link to="/history" className={linkClass("/history")}>
-              History
-            </Link>
-            <Link to="/settings" className={linkClass("/settings")}>
-              Settings
-            </Link>
-          </div>
-          {/* Theme toggle hidden for now per request */}
-        </nav>
+      <nav className="p-4 flex items-center justify-between border-b bg-gray-100/90 backdrop-blur-sm dark:bg-slate-900/90 dark:border-slate-800">
+  <div className="flex gap-4">
+    <Link to="/" className={linkClass("/")}>Dashboard</Link>
+    <Link to="/summary" className={linkClass("/summary")}>Summary</Link>
+    <Link to="/history" className={linkClass("/history")}>History</Link>
+    <Link to="/settings" className={linkClass("/settings")}>Settings</Link>
+  </div>
 
+  {/* 🌗 Theme Toggle */}
+  <button
+    onClick={toggleTheme}
+    className="px-3 py-1 rounded-md text-sm font-medium
+               bg-indigo-100 text-indigo-700
+               hover:bg-indigo-200
+               dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600"
+    aria-label="Toggle theme"
+  >
+    {theme === "dark" ? "☀ Light" : "🌙 Dark"}
+  </button>
+</nav>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/summary" element={<Summary />} />

@@ -5,6 +5,14 @@ export default function Settings() {
   const { dailyGoal, setDailyGoal, macroTargets, setMacroTargets } =
     useCalories();
   const [goal, setGoal] = useState(dailyGoal);
+  const numberInputClass =
+  "w-full rounded-lg border appearance-none " +
+  "bg-white text-gray-900 " +
+  "dark:bg-slate-800 dark:text-slate-100 " +
+  "border-gray-200 dark:border-slate-700 " +
+  "placeholder-gray-400 dark:placeholder-slate-500 " +
+  "focus:outline-none focus:ring-2 focus:ring-indigo-500"
+
   const [proteinTarget, setProteinTarget] = useState(macroTargets.protein);
   const [fatTarget, setFatTarget] = useState(macroTargets.fat);
   const [carbTarget, setCarbTarget] = useState(macroTargets.carbs);
@@ -31,7 +39,7 @@ export default function Settings() {
               type="number"
               value={goal}
               onChange={(e) => setGoal(Number(e.target.value))}
-              className="w-full p-3 border rounded-lg mt-1"
+              className={`${numberInputClass} p-3 mt-1`}
             />
           </label>
         </div>
@@ -48,7 +56,7 @@ export default function Settings() {
                 type="number"
                 value={proteinTarget}
                 onChange={(e) => setProteinTarget(Number(e.target.value))}
-                className="w-full p-2 border rounded-lg mt-1 text-sm"
+                className={`${numberInputClass} p-3 mt-1`}
               />
             </label>
             <label className="block">
@@ -57,7 +65,7 @@ export default function Settings() {
                 type="number"
                 value={fatTarget}
                 onChange={(e) => setFatTarget(Number(e.target.value))}
-                className="w-full p-2 border rounded-lg mt-1 text-sm"
+                className={`${numberInputClass} p-3 mt-1`}
               />
             </label>
             <label className="block">
@@ -66,7 +74,7 @@ export default function Settings() {
                 type="number"
                 value={carbTarget}
                 onChange={(e) => setCarbTarget(Number(e.target.value))}
-                className="w-full p-2 border rounded-lg mt-1 text-sm"
+                className={`${numberInputClass} p-3 mt-1`}
               />
             </label>
           </div>
@@ -74,7 +82,7 @@ export default function Settings() {
 
         <button
           type="submit"
-          className="w-full bg-black text-white p-3 rounded-lg active:scale-95 text-sm font-medium"
+          className="w-full bg-gray-900 text-slate-100 dark:bg-slate-800 dark:text-slate-100 p-3 rounded-lg active:scale-95 text-sm font-medium"
         >
           Save
         </button>
