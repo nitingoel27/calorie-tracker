@@ -145,7 +145,7 @@ export default function Dashboard() {
   }, [todayEntries.length, preview]);
 
   return (
-    <div className="h-[calc(100vh-56px)] max-h-[calc(100vh-56px)] flex flex-col bg-slate-50 dark:bg-slate-950">
+    <div className="h-[calc(100dvh-56px)] flex flex-col bg-slate-50 dark:bg-slate-950">
       <div className="px-4 pt-4 pb-2 border-b bg-white dark:bg-slate-900 dark:border-slate-800">
         <h1 className="text-xl font-bold">Dashboard</h1>
         <p className="text-xs text-gray-500">
@@ -219,7 +219,7 @@ export default function Dashboard() {
       </div>
 
       {/* Scrollable chat section */}
-      <div className="flex-1 overflow-y-auto px-4 pb-3">
+      <div className="flex-1 overflow-y-auto px-4 pb-3 overscroll-contain">
         <div className="min-h-full flex flex-col justify-end space-y-3">
           {todayEntries.length === 0 ? (
             <p className="text-xs text-gray-400 text-center mt-4">
@@ -267,7 +267,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="border-t bg-white dark:bg-slate-900 px-3 py-2 space-y-2">
+      <div className="sticky bottom-0 border-t bg-white dark:bg-slate-900 px-3 py-2 space-y-2">
         <div className="max-w-2xl mx-auto flex flex-wrap gap-2 text-xs">
           <button
             type="button"
