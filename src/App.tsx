@@ -59,7 +59,8 @@ function AppShell() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/summary" element={<Summary />} />
-          <Route path="/app" element={<Add />} />
+          {/* <Route path="/app" element={<Add />} /> */}
+          <Route path="/add" element={<Add />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/day/:date" element={<DayDetail />} />

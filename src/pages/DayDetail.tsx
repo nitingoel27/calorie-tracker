@@ -56,8 +56,18 @@ export default function DayDetail() {
   Day details
 </h1>
 
-<p className="text-xs text-gray-500 dark:text-gray-400">{niceDate}</p>
 
+<p className="text-xs text-gray-500 dark:text-gray-400">{niceDate}</p>
+<button
+  onClick={() =>
+    navigate("/add", {
+      state: { date: isoDate },
+    })
+  }
+  className="w-full bg-purple-600 text-white p-2 rounded-lg text-sm font-medium"
+>
+  + Add entry for this day
+</button>
 
 <div className="grid grid-cols-2 gap-3 text-center text-xs">
   <div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg">
