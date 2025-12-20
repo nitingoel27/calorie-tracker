@@ -92,7 +92,7 @@ export default function Landing() {
       </section>
 
       <footer className="py-6 text-center text-xs text-gray-500 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} Calories Tracker. All rights reserved.
+        &copy; {new Date().getFullYear()} CalMate. All rights reserved.
       </footer>
     </div>
   );
