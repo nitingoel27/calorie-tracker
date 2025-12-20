@@ -137,13 +137,13 @@ export default function Dashboard() {
   }, [nameCounts, text]);
 
   // Auto-scroll to the latest entry / preview
-  useEffect(() => {
-    if (!endOfListRef.current) return;
-    endOfListRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
-  }, [todayEntries.length, preview]);
+  // useEffect(() => {
+  //   if (!endOfListRef.current) return;
+  //   endOfListRef.current.scrollIntoView({
+  //     behavior: "smooth",
+  //     block: "end",
+  //   });
+  // }, [todayEntries.length, preview]);
 
   return (
     <div className="h-[calc(100dvh-56px)] flex flex-col bg-slate-50 dark:bg-slate-950">
