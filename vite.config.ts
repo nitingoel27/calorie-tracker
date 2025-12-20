@@ -10,7 +10,7 @@ export default defineConfig({
       includeAssets: ["favicon.svg"],
       manifest: {
         name: "Calorie Tracker",
-        short_name: "Calories",
+        short_name: "Calorie Tracker",
         description: "Track meals and workouts daily",
         theme_color: "#16a34a",
         background_color: "#ffffff",
