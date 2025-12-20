@@ -59,6 +59,7 @@ export default function Settings() {
   
   TASK:
   Calculate daily calorie and macro requirements.
+  You have to be very accurate. dont make mistakes
   
   INPUT:
   Age: ${age}
