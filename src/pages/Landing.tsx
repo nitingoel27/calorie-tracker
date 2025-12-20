@@ -1,24 +1,88 @@
 // src/pages/Landing.tsx
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import logo from "../../public/logowithoutbg.png"
 
 export default function Landing() {
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    // Detect if already installed
+    if (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone
+    ) {
+      setIsInstalled(true);
+    }
+
+    // Detect iOS
+    const ua = window.navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua)) {
+      setIsIOS(true);
+    }
+
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+      setDeferredPrompt(null);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-purple-50 to-white dark:from-slate-900 dark:to-slate-950">
       
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center px-6 py-20 bg-gradient-to-r from-purple-600 to-indigo-500 text-white">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">
-          CalMate
-        </h1>
+      <img
+  src={logo}
+  alt="CalMate Logo"
+  className="w-35 h-30 drop-shadow-lg animate-fade-in"
+/>
+
+
         <p className="text-lg md:text-2xl mb-6 max-w-2xl mx-auto">
           No signup. No cloud. Just track your calories and macros the way you want.
         </p>
-        <Link
-          to="/dashboard"
-          className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
-        >
-          Start Tracking
-        </Link>
+
+        <div className="flex flex-wrap gap-4 justify-center">
+          {!isInstalled && deferredPrompt && (
+            <button
+              onClick={handleInstall}
+              className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              Install App
+            </button>
+          )}
+
+          <Link
+            to="/dashboard"
+            className="bg-indigo-900 bg-opacity-20 backdrop-blur text-white font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform border border-white/30"
+          >
+            Start Tracking
+          </Link>
+        </div>
+
+        {isIOS && !isInstalled && (
+          <p className="mt-4 text-sm text-white/80">
+            On iPhone: Tap <strong>Share → Add to Home Screen</strong>
+          </p>
+        )}
       </section>
 
       {/* Features Section */}
@@ -83,12 +147,24 @@ export default function Landing() {
         <p className="mb-6 max-w-xl mx-auto">
           Install the app and begin your calories tracking journey in seconds. No hassle, just results.
         </p>
-        <Link
-          to="/dashboard"
-          className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
-        >
-          Start Tracking Now
-        </Link>
+
+        <div className="flex flex-wrap gap-4 justify-center">
+          {!isInstalled && deferredPrompt && (
+            <button
+              onClick={handleInstall}
+              className="bg-white text-purple-700 font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              Install App
+            </button>
+          )}
+
+          <Link
+            to="/dashboard"
+            className="bg-indigo-900 bg-opacity-20 backdrop-blur text-white font-bold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition-transform border border-white/30"
+          >
+            Start Tracking Now
+          </Link>
+        </div>
       </section>
 
       <footer className="py-6 text-center text-xs text-gray-500 dark:text-gray-400">
