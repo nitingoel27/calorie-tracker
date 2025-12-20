@@ -9,7 +9,7 @@ import FloatingAddButton from "./components/FloatingAddButton";
 import { useTheme } from "./context/ThemeContext";
 import DayDetail from "./pages/DayDetail";
 import Landing from "./pages/Landing";
-import {ChartColumnIncreasing, Home, TrendingUp} from "lucide-react";
+import {ChartColumnIncreasing, Home} from "lucide-react";
 import {Settings2} from "lucide-react";
 
 export default function App() {
