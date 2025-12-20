@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+# Calories Tracker 🥗
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Track calories. Not subscriptions.**
 
-Currently, two official plugins are available:
+This app was built out of frustration with calorie trackers that force paid plans within days.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+No ads.  
+No subscriptions.  
+No login.  
+No cloud storage.
 
-## React Compiler
+Just install and start tracking.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Why this exists
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Most calorie tracking apps:
+- Lock features behind paywalls
+- Force sign-ups
+- Store your data on their servers
+- Push subscriptions aggressively
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+I didn’t want any of that.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+So I built a **no-bullshit calorie tracker** that:
+- Works offline
+- Requires zero personal details
+- Stores everything locally on your device
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔒 Privacy First
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- No account required
+- No personal data collected
+- No cloud database
+- No tracking
+- No analytics
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Your data **never leaves your device**.
+
+---
+
+## 📱 Progressive Web App (PWA)
+
+This app is a **PWA**:
+- Install directly from your browser
+- Works like a native app
+- Fully offline after install
+
+### How to install
+1. Open the app in Chrome / Edge / Safari
+2. Tap **“Add to Home Screen”**
+3. Done 🎉
+
+---
+
+## ✨ Features
+
+- Track meals and calories
+- Track workouts
+- Daily calorie goals
+- Macro tracking (protein, fat, carbs)
+- AI-based macro suggestion (optional)
+- Clean, fast UI
+- Works offline
+
+---
+
+## 🔮 Future (Optional)
+
+Planned **only if users want it**:
+- Login & cloud sync (for device change)
+- Data export
+- Backup & restore
+
+The core app will **always remain free and usable without login**.
+
+---
+
+## 🛠 Tech Stack
+
+- Vite + React + TypeScript
+- Tailwind CSS
+- Context API
+- Progressive Web App (PWA)
+- LocalStorage (no backend)
+
+---
+
+## 💬 Philosophy
+
+> Software should solve problems — not create subscriptions.
+
+---
+
+## 📄 License
+
+MIT
