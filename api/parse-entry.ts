@@ -32,10 +32,10 @@ export default async function handler(
 
     const prompt = `
 You are a calorie tracking assistant.
-
+The response needs to be very acurate
 Convert the user input into VALID JSON ONLY.
 DO NOT add explanation, markdown, or text.
-
+MAKE SURE RESPONSE VALUES ARE ACCURATE.
 INPUT:
 "${text}"
 
