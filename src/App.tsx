@@ -39,12 +39,12 @@ function AppShell() {
     <div className={theme === "dark" ? "dark" : ""}>
       <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-slate-950 dark:text-slate-100">
       <nav className="p-4 flex items-center justify-between border-b bg-gray-100/90 backdrop-blur-sm dark:bg-slate-900/90 dark:border-slate-800">
-  <div className="flex gap-3">
-  <Link to="/" className={linkClass("/")}><Home className="w-6 h-6 text-purple-600"/></Link>
-    <Link to="/dashboard" className={linkClass("/Dashboard")}>Dashboard</Link>
-    <Link to="/summary" className={linkClass("/summary")}>Summary</Link>
-    <Link to="/history" className={linkClass("/history")}>History</Link>
-    <Link to="/settings" className={linkClass("/settings")}>Settings</Link>
+  <div className="flex gap-4 overflow-x-auto whitespace-nowrap scrollbar -hide">
+  <Link to="/" className={`${linkClass("/")} flex-shrink-0`} ><Home className="w-6 h-6 text-purple-600"/></Link>
+    <Link to="/dashboard" className={`${linkClass("/Dashboard")} flex-shrink-0`}>Dashboard</Link>
+    <Link to="/summary" className={`${linkClass("/summary")} flex-shrink-0`}>Summary</Link>
+    <Link to="/history" className={`${linkClass("/history")} flex-shrink-0`}>History</Link>
+    <Link to="/settings" className={`${linkClass("/settings")} flex-shrink-0`}>Settings</Link>
   </div>
 
   {/* 🌗 Theme Toggle */}
