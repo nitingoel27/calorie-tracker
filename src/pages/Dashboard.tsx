@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useCalories } from "../context/CalorieContext";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const { meals, workouts, dailyGoal, addMeal, addWorkout } = useCalories();
@@ -147,10 +148,16 @@ export default function Dashboard() {
   return (
     <div className="h-[calc(100dvh-56px)] flex flex-col bg-slate-50 dark:bg-slate-950">
       <div className="px-4 pt-4 pb-2 border-b bg-white dark:bg-slate-900 dark:border-slate-800">
+        
         <h1 className="text-xl font-bold">Dashboard</h1>
+        <div className="flex items-center justify-between">
         <p className="text-xs text-gray-500">
           Today&apos;s entries ({todayEntries.length}) · Chat with your calorie tracker
         </p>
+        <button className="px-2 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+          <Link to="/add">➕</Link>
+        </button>
+        </div>
       </div>
 
       {/* Fixed stats section (not scrollable) */}

@@ -47,7 +47,7 @@ function AppShell() {
   {/* 🌗 Theme Toggle */}
   <button
     onClick={toggleTheme}
-    className="px-3 py-1 rounded-md text-sm font-medium
+    className="px-1 py-1 rounded-md text-sm font-medium
                bg-indigo-100 text-indigo-700
                hover:bg-indigo-200
                dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600"
