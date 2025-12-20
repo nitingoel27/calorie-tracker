@@ -7,7 +7,9 @@ import Summary from "./pages/Summary";
 import FloatingAddButton from "./components/FloatingAddButton";
 import { useTheme } from "./context/ThemeContext";
 import DayDetail from "./pages/DayDetail";
-
+import Landing from "./pages/Landing";
+import {Home} from "lucide-react";
+ 
 
 export default function App() {
   return (
@@ -37,8 +39,9 @@ function AppShell() {
     <div className={theme === "dark" ? "dark" : ""}>
       <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-slate-950 dark:text-slate-100">
       <nav className="p-4 flex items-center justify-between border-b bg-gray-100/90 backdrop-blur-sm dark:bg-slate-900/90 dark:border-slate-800">
-  <div className="flex gap-4">
-    <Link to="/" className={linkClass("/")}>Dashboard</Link>
+  <div className="flex gap-3">
+  <Link to="/" className={linkClass("/")}><Home className="w-6 h-6 text-purple-600"/></Link>
+    <Link to="/dashboard" className={linkClass("/Dashboard")}>Dashboard</Link>
     <Link to="/summary" className={linkClass("/summary")}>Summary</Link>
     <Link to="/history" className={linkClass("/history")}>History</Link>
     <Link to="/settings" className={linkClass("/settings")}>Settings</Link>
@@ -57,7 +60,8 @@ function AppShell() {
   </button>
 </nav>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/summary" element={<Summary />} />
           {/* <Route path="/app" element={<Add />} /> */}
           <Route path="/add" element={<Add />} />

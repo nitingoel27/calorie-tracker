@@ -152,7 +152,7 @@ export default function Dashboard() {
         <h1 className="text-xl font-bold">Dashboard</h1>
         <div className="flex items-center justify-between">
         <p className="text-xs text-gray-500">
-          Today&apos;s entries ({todayEntries.length}) · Chat with your calorie tracker
+          Today&apos;s entries ({todayEntries.length}) · Chat with CalMate
         </p>
         <button className="px-2 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
           <Link to="/add">➕</Link>

@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <header className="p-4 bg-white shadow-sm sticky top-0 z-10">
-      <h1 className="text-xl font-semibold">Calorie Tracker</h1>
+      <h1 className="text-xl font-semibold">CalMate</h1>
       <p className="text-sm text-gray-500">{today}</p>
     </header>
   )

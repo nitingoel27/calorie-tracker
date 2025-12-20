@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg"],
       manifest: {
-        name: "Calorie Tracker",
-        short_name: "Calorie Tracker",
-        description: "Track meals and workouts daily",
+        name: "CalMate",
+        short_name: "CalMate",
+        description: "Your calorie buddy.",
         theme_color: "#16a34a",
         background_color: "#ffffff",
         display: "standalone",
