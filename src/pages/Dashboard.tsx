@@ -132,7 +132,7 @@ export default function Dashboard() {
     if (!q) return [];
     return nameCounts
       .filter(([name]) => name.toLowerCase().includes(q))
-      .slice(0, 5)
+      .slice(0, 3)
       .map(([name]) => name);
   }, [nameCounts, text]);
 
