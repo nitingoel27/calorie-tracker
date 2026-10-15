@@ -2,6 +2,12 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Server-side API keys
+
+Configure `MISTRAL_API_KEY` as a server-side environment variable in Vercel and in your local server environment. Do not use a `VITE_` prefix: Vite exposes variables with that prefix in the browser bundle. The Mistral key is used by the `/api/calculate-macros` serverless function.
+
+The previous browser-exposed Mistral key should be revoked and replaced before deployment.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh

@@ -45,79 +45,44 @@ export default function Settings() {
     setTimeout(() => setSaved(false), 2500);
   };
 
-  const extractJSON = (text: string) => {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("No JSON found");
-    return JSON.parse(match[0]);
-  };
-  
   const handleAICalculate = async () => {
     setAiLoading(true);
-  
-    const prompt = `
-  You are a nutrition expert.
-  
-  TASK:
-  Calculate daily calorie and macro requirements.
-  You have to be very accurate. dont make mistakes
-  
-  INPUT:
-  Age: ${age}
-  Gender: ${gender}
-  Height: ${height} cm
-  Weight: ${weight} kg
-  Activity level: ${activity}
-  Goal: ${goalType}
-  
-  OUTPUT FORMAT (IMPORTANT):
-  Return ONLY valid JSON.
-  No markdown.
-  No explanation.
-  No text.
-  
-  JSON TEMPLATE:
-  {
-    "calories": number,
-    "protein": number,
-    "fat": number,
-    "carbs": number
-  }
-  `;
-  
+
     try {
-      const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
+      const res = await fetch("/api/calculate-macros", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_MISTRAL_API_KEY}`,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "mistral-small",
-          messages: [{ role: "user", content: prompt }],
-          temperature: 0.2,
+          age,
+          gender,
+          height,
+          weight,
+          activity,
+          goal: goalType,
         }),
       });
-  
       const data = await res.json();
-      const content = data.choices[0].message.content;
-  
-      const parsed = extractJSON(content);
-  
-      setGoal(() => Number(parsed.calories) || 0);
-      setProteinTarget(() => Number(parsed.protein) || 0);
-      setFatTarget(() => Number(parsed.fat) || 0);
-      setCarbTarget(() => Number(parsed.carbs) || 0);
-  
-      setAiMessage("AI suggested values are filled below. Please review and tap Save")
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to calculate macros");
+      }
+
+      setGoal(Number(data.calories) || 0);
+      setProteinTarget(Number(data.protein) || 0);
+      setFatTarget(Number(data.fat) || 0);
+      setCarbTarget(Number(data.carbs) || 0);
+
+      setAiMessage(
+        "AI suggested values are filled below. Please review and tap Save",
+      );
       setTimeout(() => setSaved(false), 2500);
     } catch (err) {
       console.error(err);
-      alert("Failed to calculate macros");
+      alert(err instanceof Error ? err.message : "Failed to calculate macros");
     } finally {
       setAiLoading(false);
     }
   };
-  
+
 
   return (
     <div className="p-4 space-y-4">
